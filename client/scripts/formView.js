@@ -8,8 +8,9 @@ var FormView = {
 
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
+    // console.log(event);
     event.preventDefault();
-    
+
     console.log('click!');
   },
 
