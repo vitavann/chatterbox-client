@@ -1,25 +1,16 @@
 var Messages = {
+  $text: $('#message'),
+  $roomname: $('#rooms'),
+  $username: window.location.search.substr(10),
 
-
-  post: function(message) {
-    $.ajax({
-      // This is the url you should use to communicate with the parse API server.
-      url: 'http://parse.sfo.hackreactor.com/chatterbox/classes/messages',
-      type: 'POST',
-      data: JSON.stringify(message),
-      contentType: 'application/json',
-      success: function (data) {
-        console.log('chatterbox: Message sent');
-      },
-      error: function (data) {
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-        console.error('chatterbox: Failed to send message', data);
-      }
-    });
-
+  post: function() {
+    var messagePackage = {
+      username: Messages.$username,
+      text: Messages.$text.val(),
+      roomname: Messages.$roomname.val()
+    };
+    Parse.create(messagePackage);
   }
-
 };
 
-$('#submit').on('click', Messages.post('hello world')); //replace ('hello world') with $('#message')
-//add event listener that executes Messages.post upon clicking Submit button
+$('form').on('submit', Messages.post);
